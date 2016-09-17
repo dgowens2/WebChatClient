@@ -5,37 +5,32 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 
 /**
  * Created by DTG2 on 09/12/16.
  */
 public class WebChatClient {
 
-    private String serverResponse;
+    String serverResponse;
+    public final static String CLIENT_URL = "10.0.0.132";
+    public final static int CLIENT_PORT = 8005;
 
-    public static void main(String[] args) {
-        WebChatClient myClient = new WebChatClient();
-        myClient.sendMessage("message");
-    }
 
     public String sendMessage(String message) {
-        Scanner clientText = new Scanner(System.in);
         try {
-            Socket clientSocket = new Socket("localhost", 8080);
+            Socket clientSocket = new Socket(CLIENT_URL, CLIENT_PORT);
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-            while (true) {
-                out.println(message);
+            out.println( message);
+            System.out.println("Client: " +message);
 
-                serverResponse = in.readLine();
+            serverResponse = in.readLine();
+            System.out.println("Server: " + serverResponse);
 
-                System.out.println(serverResponse);
-            }
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-            return serverResponse;
+        return serverResponse;
     }
 }

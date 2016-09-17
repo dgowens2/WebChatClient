@@ -27,7 +27,7 @@ public class SampleSpringAppController {
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.GET)
-    public String logout(Model model, HttpSession session) {
+    public String logout(HttpSession session) {
         session.removeAttribute("userName");
         return "redirect:/";
     }
@@ -35,6 +35,19 @@ public class SampleSpringAppController {
     public String login(HttpSession session, String userName) {
         session.setAttribute("userName", userName);
         return "redirect:/";
+    }
+
+    @RequestMapping(path = "/chat", method = RequestMethod.GET)
+    public String chat() {
+        return "chat-view";
+    }
+
+    @RequestMapping(path = "/inputText", method = RequestMethod.POST)
+    public String inputText(HttpSession session, String message) {
+        WebChatClient myChatClient = new WebChatClient();
+        myChatClient.sendMessage(message);
+        session.getAttribute(message);
+        return "redirect:/chat";
     }
 
     //view does not see session, view sees model
