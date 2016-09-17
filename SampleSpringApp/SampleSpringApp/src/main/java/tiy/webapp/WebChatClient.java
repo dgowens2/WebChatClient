@@ -12,7 +12,7 @@ import java.net.Socket;
 public class WebChatClient {
 
     String serverResponse;
-    public final static String CLIENT_URL = "10.0.0.132";
+    public final static String CLIENT_URL = "localhost";
     public final static int CLIENT_PORT = 8005;
 
 
@@ -22,8 +22,8 @@ public class WebChatClient {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-            out.println( message);
-            System.out.println("Client: " +message);
+            out.println(message);
+            System.out.println("Client: " + message);
 
             serverResponse = in.readLine();
             System.out.println("Server: " + serverResponse);
