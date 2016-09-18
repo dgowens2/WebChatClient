@@ -12,7 +12,6 @@ import java.net.Socket;
 public class SpringChatServerConnectionHandler implements Runnable {
 
     Socket connection;
-    String response = null;
 
     public void run(){
         try{
@@ -34,20 +33,20 @@ public class SpringChatServerConnectionHandler implements Runnable {
         PrintWriter outputToClient = new PrintWriter(connection.getOutputStream(), true);
 
         try {
-            conversationHandler(outputToClient, inputFromClient, response);
+            conversationHandler(outputToClient, inputFromClient);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
-    public static void conversationHandler(PrintWriter outputToClient, BufferedReader inputFromClient, String response) throws IOException {
+    public static void conversationHandler(PrintWriter outputToClient, BufferedReader inputFromClient) throws IOException {
         String clientText;
 
         if ((clientText = inputFromClient.readLine()) != null){
             System.out.println("Client: " + clientText);
         }
-        outputToClient.println(response);
-        System.out.println(response);
+        outputToClient.println(clientText);
+        System.out.println(clientText);
 
     }
 }
